@@ -24,6 +24,48 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 # Import our scraper modules
 from scraper.site_scrapers import get_scraper_for_url
 
+
+
+# Add this near the beginning of the main() function:
+logger.info("Checking for input...")
+logger.info(f"Environment variables: APIFY_IS_AT_HOME={os.environ.get('APIFY_IS_AT_HOME')}")
+logger.info(f"Input environment variable: {os.environ.get('APIFY_INPUT')}")
+
+# Try direct environment variable first
+input_env = os.environ.get("APIFY_INPUT")
+if input_env:
+    logger.info(f"Found input in APIFY_INPUT: {input_env}")
+    try:
+        actor_input = json.loads(input_env)
+    except Exception as e:
+        logger.error(f"Error parsing APIFY_INPUT: {str(e)}")
+else:
+    logger.info("No APIFY_INPUT found, checking file paths...")
+
+# Check multiple possible input paths
+possible_paths = [
+    "apify_storage/key_value_stores/default/INPUT.json",
+    "key_value_stores/default/INPUT.json",
+    os.path.join(os.environ.get("APIFY_INPUT_KEY", ""), "INPUT.json"),
+    os.path.join(os.environ.get("APIFY_INPUT_KEY", ""), "key_value_stores", os.environ.get("APIFY_DEFAULT_KEY_VALUE_STORE_ID", "default"), "INPUT.json")
+]
+
+for path in possible_paths:
+    logger.info(f"Checking path: {path}")
+    if os.path.exists(path):
+        logger.info(f"Found input file at: {path}")
+        try:
+            with open(path, "r") as f:
+                actor_input = json.load(f)
+                break
+        except Exception as e:
+            logger.error(f"Error reading input file {path}: {str(e)}")
+
+
+
+
+
+
 async def main():
     """Main entry point for the Apify actor"""
     
