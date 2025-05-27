@@ -106,20 +106,32 @@ async def main():
     except Exception as e:
         logger.error(f"Error reading input: {str(e)}")
         actor_input = {}
+
+
+    # Log the actual input received
+    logger.info(f"Actor input received: {actor_input}")
     
     # Extract parameters from input
-    urls = actor_input.get('urls', [])
-    query = actor_input.get('query', 'iraq oil')
-    max_pages = actor_input.get('maxPages', 1)
+    urls = actor_input.get('urls', []) or actor_input.get('urlsToScrape', [])
+    query = actor_input.get('query', '') or actor_input.get('searchQuery', 'iraq oil')
+    max_pages = actor_input.get('maxPages', 1) or actor_input.get('maximumPages', 1)
     
     # If a single URL is provided as a string, convert it to a list
     if isinstance(urls, str):
         urls = [urls]
-        
-    # If no URLs are provided, log an error and exit
+
+
+
+    # If no URLs are provided, use default values
     if not urls:
-        logger.error("No URLs provided in the input")
-        return
+    logger.info("No URLs provided in input, using default values")
+    urls = [
+        "https://www.al-monitor.com/search?text=iraq+oil",
+        "https://africanreview.com/search?q=iraq+oil&Search="
+    ]
+
+
+
         
     # Create output directory
     output_dir = "output"
