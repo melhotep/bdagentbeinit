@@ -1,0 +1,69 @@
+{
+  "actorSpecification": 1,
+  "name": "news-scraper-actor",
+  "title": "News Scraper for Dynamic Sites",
+  "description": "Scrapes news articles from dynamic websites using a hybrid approach with Playwright and Requests",
+  "version": "1.0.0",
+  "meta": {
+    "templateId": "python-playwright"
+  },
+  "input": "./input_schema.json",
+  "dockerfile": "./Dockerfile",
+  "storages": {
+    "dataset": {
+      "actorSpecification": 1,
+      "title": "News Articles",
+      "description": "Scraped news articles from various sources",
+      "views": {
+        "articles": {
+          "title": "Articles",
+          "description": "List of scraped news articles",
+          "transformation": {
+            "fields": [
+              "title",
+              "url",
+              "date",
+              "snippet",
+              "source",
+              "query",
+              "source_url"
+            ]
+          },
+          "display": {
+            "component": "table",
+            "properties": {
+              "title": {
+                "label": "Title",
+                "format": "text"
+              },
+              "url": {
+                "label": "URL",
+                "format": "link"
+              },
+              "date": {
+                "label": "Date",
+                "format": "text"
+              },
+              "snippet": {
+                "label": "Snippet",
+                "format": "text"
+              },
+              "source": {
+                "label": "Source",
+                "format": "text"
+              },
+              "query": {
+                "label": "Query",
+                "format": "text"
+              },
+              "source_url": {
+                "label": "Source URL",
+                "format": "link"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

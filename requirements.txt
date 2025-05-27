@@ -1,0 +1,9 @@
+# News Scraper for Dynamic Sites - Python
+# Feel free to add your Python dependencies below. For formatting guidelines, see:
+# https://pip.pypa.io/en/latest/reference/requirements-file-format/
+
+apify-client>=1.4.0
+playwright>=1.32.0
+requests>=2.32.3
+beautifulsoup4>=4.13.4
+asyncio>=3.4.3

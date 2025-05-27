@@ -1,0 +1,35 @@
+{
+  "title": "News Scraper Input",
+  "type": "object",
+  "schemaVersion": 1,
+  "properties": {
+    "urls": {
+      "title": "URLs to scrape",
+      "type": "array",
+      "description": "List of URLs to scrape. Each URL should be a search page from a supported news website.",
+      "editor": "stringList",
+      "prefill": [
+        "https://www.adnoc.ae/en/search?query=iraq+oil",
+        "https://english.ahram.org.eg/UI/Front/Search.aspx?Text=iraq%20oil",
+        "https://www.aljazeera.com/search/iraq%20oil?sort=date"
+      ]
+    },
+    "query": {
+      "title": "Search query",
+      "type": "string",
+      "description": "The search query to use for websites that require direct input (not in URL).",
+      "editor": "textfield",
+      "prefill": "iraq oil"
+    },
+    "maxPages": {
+      "title": "Maximum pages",
+      "type": "integer",
+      "description": "Maximum number of pages to scrape from each website.",
+      "editor": "number",
+      "prefill": 1,
+      "minimum": 1,
+      "maximum": 10
+    }
+  },
+  "required": ["urls"]
+}
